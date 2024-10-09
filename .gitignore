@@ -1,2 +1,5 @@
-ckpt/
-engines/
+ckpt/*
+!ckpt/.gitkeep
+engines/*
+!engines/.gitkeep
+*.cache

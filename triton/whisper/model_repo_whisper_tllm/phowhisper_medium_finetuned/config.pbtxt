@@ -19,11 +19,11 @@ max_batch_size: 16
 parameters [
   {
    key: "n_mels", 
-   value: {string_value:"128"} # 128 dim for large-v3, 80 dim for large-v2
+   value: {string_value:"80"} # 128 dim for large-v3, 80 dim for large-v2
   },
   {
     key: "engine_dir"
-    value: { string_value: "model_repo_whisper_tllm/phowhisper_medium_finetuned/1/phowhisper_medium_finetuned"}
+    value: { string_value: "/triton/whisper/model_repo_whisper_tllm/phowhisper_medium_finetuned/1/phowhisper-medium-finetuned"}
   }
 ]
 
@@ -50,7 +50,7 @@ output [
 ]
 
 dynamic_batching {
-    preferred_batch_size: [ 4, 8]
+    preferred_batch_size: [4, 8]
     max_queue_delay_microseconds: 1000
   }
 instance_group [
