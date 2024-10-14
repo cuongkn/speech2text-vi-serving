@@ -1,1 +1,2 @@
 tiktoken
+awscli==1.33.13

@@ -3,3 +3,4 @@ ckpt/*
 engines/*
 !engines/.gitkeep
 *.cache
+*.zip
