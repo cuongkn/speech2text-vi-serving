@@ -23,7 +23,7 @@ parameters [
   },
   {
     key: "engine_dir"
-    value: { string_value: "/triton/whisper/model_repo_whisper_tllm/phowhisper_medium_finetuned/1/phowhisper-medium-finetuned"}
+    value: { string_value: "/triton/whisper/model_repo_whisper_tllm/phowhisper_medium_finetuned/1/whisper-medium-finetuned"}
   }
 ]
 
