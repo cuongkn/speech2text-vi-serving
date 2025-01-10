@@ -4,3 +4,4 @@ engines/*
 !engines/.gitkeep
 *.cache
 *.zip
+__pycache__

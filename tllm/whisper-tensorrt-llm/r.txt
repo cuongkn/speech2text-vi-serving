@@ -1,0 +1,7 @@
+tensorrt_llm==0.15.0.dev2024101500
+pynvml==11.5.3 
+tensorrt-cu12==10.4.0
+transformers
+openai-whisper
+kaldialign
+soundfile
