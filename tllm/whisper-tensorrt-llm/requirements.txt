@@ -1,10 +1,8 @@
---extra-index-url https://pypi.nvidia.com
-tensorrt_llm==0.11.0.dev2024052800
-datasets
-kaldialign
-openai-whisper
-librosa
-soundfile
-safetensors
+tensorrt_llm==0.15.0.dev2024101500
+pynvml==11.5.3
+tensorrt_cu12_libs==10.4.0
+tensorrt-cu12-bindings==10.4.0
 transformers
-janus
+openai-whisper
+kaldialign
+soundfile

@@ -34,11 +34,15 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument('--model_name',
                         type=str,
-                        default='phowhisper-small-finetuned',)
+                        default='whisper-medium-finetuned',)
     parser.add_argument('--output_dir',
                         type=str,
                         default='ckpt/pt_checkpoint',
                         help='The path to save the .pt checkpoint')
+    parser.add_argument('--dtype',
+                        type=str,
+                        default='float16',
+                        choices=['float32', 'bfloat16', 'float16'])
     args = parser.parse_args()
     return args
 
@@ -55,10 +59,12 @@ def rename_keys(s_dict):
     return s_dict
 
 
-def convert_hf_ckpt_to_whisper_ckpt(hf_model_name_or_path, whisper_ckpt_save_path):
+def convert_hf_ckpt_to_whisper_ckpt(hf_model_name_or_path, whisper_ckpt_save_path, dtype):
     pretrained_path = os.path.join('ckpt/pretrained_checkpoint', hf_model_name_or_path)
     transformer_model = AutoModelForSpeechSeq2Seq.from_pretrained(pretrained_path)
-    transformer_model = transformer_model.half()
+    
+    if dtype != "float32":
+        transformer_model = transformer_model.half()
     config = transformer_model.config
 
     dims = {
@@ -85,6 +91,6 @@ if __name__ == "__main__":
     if not os.path.exists(args.output_dir):
         os.makedirs(args.output_dir)
     pt_saving_path = os.path.join(args.output_dir, f"{args.model_name.split('/')[-1]}.pt")
-    convert_hf_ckpt_to_whisper_ckpt(args.model_name, pt_saving_path)
+    convert_hf_ckpt_to_whisper_ckpt(args.model_name, pt_saving_path, args.dtype)
     
     
