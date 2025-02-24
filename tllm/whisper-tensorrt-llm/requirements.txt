@@ -1,7 +1,9 @@
-tensorrt_llm==0.15.0.dev2024101500
+tensorrt_llm==0.18.0.dev2025021800
+tensorrt==10.8.0.43
+tensorrt_cu12==10.8.0.43
+tensorrt_cu12_bindings==10.8.0.43
+tensorrt_cu12_libs==10.8.0.43
 pynvml==11.5.3
-tensorrt_cu12_libs==10.4.0
-tensorrt-cu12-bindings==10.4.0
 transformers
 openai-whisper
 kaldialign

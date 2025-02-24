@@ -48,12 +48,13 @@ class TritonPythonModel:
         runner_kwargs = dict(
             engine_dir=engine_dir,
             is_enc_dec=True,
-            max_batch_size=64,
+            max_batch_size=32,
             max_input_len=3000,
             max_output_len=96,
-            max_beam_width=1,
+            max_beam_width=4,
             debug_mode=False,
-            kv_cache_free_gpu_memory_fraction=0.5,
+            kv_cache_free_gpu_memory_fraction=0.9,
+            cross_kv_cache_fraction=0.5,
         )
         self.model_runner_cpp = ModelRunnerCpp.from_dir(**runner_kwargs)
         self.feature_extractor = FeatureExtractor(
@@ -107,7 +108,7 @@ class TritonPythonModel:
                 max_new_tokens=96,
                 end_id=self.eot_id,
                 pad_id=self.eot_id,
-                num_beams=1,
+                num_beams=4,
                 output_sequence_lengths=True,
                 return_dict=True
             )

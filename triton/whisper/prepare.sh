@@ -27,7 +27,7 @@ launch_triton_repo_python_backend() {
     
     echo "Launching triton server with model_repo: $model_repository"
     
-    tritonserver --model-repository=$model_repository
+    tritonserver --model-repository=$model_repository --log-warning False
 }
 
 

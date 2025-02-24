@@ -1,15 +1,17 @@
 model_name="$1"
 
-INFERENCE_PRECISION=float16
+INFERENCE_PRECISION=float32
 WEIGHT_ONLY_PRECISION=int8
 MAX_BEAM_WIDTH=4
-MAX_BATCH_SIZE=16
+MAX_BATCH_SIZE=32
 checkpoint_path=engines/
 checkpoint_dir=${checkpoint_path}${model_name}_weights
 output_dir=${checkpoint_path}${model_name}
 
 python3 tllm/whisper-tensorrt-llm/convert_checkpoint.py \
                 --model_name $model_name \
+                --dtype ${INFERENCE_PRECISION} \
+                --logits_dtype ${INFERENCE_PRECISION} \
                 --output_dir $checkpoint_dir
 
 # Build the large-v3 model using trtllm-build
@@ -22,7 +24,8 @@ trtllm-build  --checkpoint_dir ${checkpoint_dir}/encoder \
               --max_input_len 3000 \
               --max_seq_len=3000 \
               --paged_kv_cache enable \
-              --remove_input_padding enable 
+              --remove_input_padding enable \
+              --bert_context_fmha_fp32_acc enable
               
 
 trtllm-build  --checkpoint_dir ${checkpoint_dir}/decoder \
@@ -37,5 +40,6 @@ trtllm-build  --checkpoint_dir ${checkpoint_dir}/decoder \
               --bert_attention_plugin ${INFERENCE_PRECISION} \
               --gpt_attention_plugin ${INFERENCE_PRECISION} \
               --paged_kv_cache enable \
-              --remove_input_padding enable 
+              --remove_input_padding enable \
+              --bert_context_fmha_fp32_acc enable
               
