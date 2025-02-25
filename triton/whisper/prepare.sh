@@ -15,15 +15,15 @@ launch_triton_repo_python_backend() {
     model_repository=whisper_model_repository
     
     rm -rf $model_repository
-    cp -r /triton/whisper/whisper_model_repository_trtllm $model_repository
+    cp -r triton/whisper/whisper_model_repository_trtllm $model_repository
     wget -nc --directory-prefix=$model_repository/infer_bls/1 https://raw.githubusercontent.com/openai/whisper/main/whisper/assets/multilingual.tiktoken
     wget -nc --directory-prefix=$model_repository/whisper/1 https://raw.githubusercontent.com/openai/whisper/main/whisper/assets/mel_filters.npz
 
     TRITON_MAX_BATCH_SIZE=64
     MAX_QUEUE_DELAY_MICROSECONDS=100
 
-    python3 /triton/whisper/fill_template.py -i $model_repository/whisper/config.pbtxt engine_dir:${engine_dir},n_mels:$n_mels,zero_pad:$zero_pad,triton_max_batch_size:${TRITON_MAX_BATCH_SIZE},max_queue_delay_microseconds:${MAX_QUEUE_DELAY_MICROSECONDS}
-    python3 /triton/whisper/fill_template.py -i $model_repository/infer_bls/config.pbtxt engine_dir:${engine_dir},triton_max_batch_size:${TRITON_MAX_BATCH_SIZE},max_queue_delay_microseconds:${MAX_QUEUE_DELAY_MICROSECONDS}
+    python3 triton/whisper/fill_template.py -i $model_repository/whisper/config.pbtxt engine_dir:${engine_dir},n_mels:$n_mels,zero_pad:$zero_pad,triton_max_batch_size:${TRITON_MAX_BATCH_SIZE},max_queue_delay_microseconds:${MAX_QUEUE_DELAY_MICROSECONDS}
+    python3 triton/whisper/fill_template.py -i $model_repository/infer_bls/config.pbtxt engine_dir:${engine_dir},triton_max_batch_size:${TRITON_MAX_BATCH_SIZE},max_queue_delay_microseconds:${MAX_QUEUE_DELAY_MICROSECONDS}
     
     echo "Launching triton server with model_repo: $model_repository"
     
@@ -36,7 +36,7 @@ CUDA_VISIBLE_DEVICES=0
 
 model_id=$1
 
-engine_dir="/engines/${model_id}"
+engine_dir="engines/${model_id}"
 
 if printf '%s\n' "${MODEL_IDs[@]}" | grep -q "^$model_id$"; then
     launch_triton_repo_python_backend "$engine_dir" || exit 1

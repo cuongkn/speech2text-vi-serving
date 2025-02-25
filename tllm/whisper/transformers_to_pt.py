@@ -91,6 +91,9 @@ if __name__ == "__main__":
     if not os.path.exists(args.output_dir):
         os.makedirs(args.output_dir)
     pt_saving_path = os.path.join(args.output_dir, f"{args.model_name.split('/')[-1]}.pt")
+    
+    print(f"Convering hf model {args.model_name} to .pt {args.dtype} format")
+    
     convert_hf_ckpt_to_whisper_ckpt(args.model_name, pt_saving_path, args.dtype)
     
     

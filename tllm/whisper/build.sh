@@ -1,6 +1,6 @@
 model_name="$1"
 
-INFERENCE_PRECISION=float32
+INFERENCE_PRECISION="$2"
 WEIGHT_ONLY_PRECISION=int8
 MAX_BEAM_WIDTH=4
 MAX_BATCH_SIZE=32
@@ -8,7 +8,7 @@ checkpoint_path=engines/
 checkpoint_dir=${checkpoint_path}${model_name}_weights
 output_dir=${checkpoint_path}${model_name}
 
-python3 tllm/whisper-tensorrt-llm/convert_checkpoint.py \
+python3 tllm/whisper/convert_checkpoint.py \
                 --model_name $model_name \
                 --dtype ${INFERENCE_PRECISION} \
                 --logits_dtype ${INFERENCE_PRECISION} \
